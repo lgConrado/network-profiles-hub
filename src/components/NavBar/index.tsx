@@ -1,4 +1,4 @@
-import perfil from "../../assets/perfil.svg";
+import perfil from "../../assets/perfil.png";
 
 const NavBar = () => {
   const path = window.location.pathname;

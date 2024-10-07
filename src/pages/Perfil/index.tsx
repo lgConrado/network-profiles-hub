@@ -1,6 +1,8 @@
+import ModalPerfil from "../../components/Perfil"
+
 const Perfil = () => {
   return (
-    <></>
+    <ModalPerfil/>
   )
 }
 

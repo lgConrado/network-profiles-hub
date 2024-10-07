@@ -7,6 +7,11 @@
     align-items: center;
     display: flex;
     gap: 1rem;
+
+    &>img{
+      height: 3rem;
+      width: 3rem;
+    }
   }
   & > ul {
     display: flex;
