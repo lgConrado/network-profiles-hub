@@ -2,9 +2,12 @@
   background-color: $color-gray-200;
   border: none;
   border-radius: 0.5rem;
-  color: $color-gray-400;
   font-size: 1.25rem;
   padding: 0.75rem 2rem;
+
+  &::placeholder {
+    color: $color-gray-700;
+  }
 }
 
 .checkbox {

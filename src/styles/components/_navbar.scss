@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 4rem;
+
+  &__perfil {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+  }
+  & > ul {
+    display: flex;
+    gap: 4rem;
+    list-style: none;
+    align-items: center;
+
+    & > li {
+      color: $color-gray-50;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 1.25rem;
+
+      &[data-actived="true"]{
+        color: $color-orange;
+        list-style: disc;
+      }
+    }
+  }
+}
