@@ -1,0 +1,44 @@
+.modal-login {
+  display: flex;
+  background-color: $color-white;
+  width: fit-content;
+  box-shadow: 0 0.25rem 1rem rgba($color-white,.12);
+  border-radius: 1rem;
+
+  &__esquerda {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 4rem 3rem;
+    text-align: center;
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  }
+
+  &__direita {
+    background-image: linear-gradient(to right bottom, rgba($color-gray-950,1), rgba($color-black,1));
+    border-radius: 4rem .75rem .75rem 4rem ;
+    
+    &__content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        gap: 4rem;
+        padding-inline: 3rem;
+        max-width: 26rem;
+        height: 100%;
+    }
+
+    &__header {
+        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+    }
+  }
+}

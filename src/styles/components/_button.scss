@@ -1,0 +1,23 @@
+.button {
+    font-size: 1rem;
+    padding: 1rem 4rem;
+    border-radius: .5rem;
+    border: .125rem solid transparent;
+    font-weight: 600;
+
+    &--primary {
+        background-color: $color-black;
+        color: $color-gray-50;
+    }
+
+    &--secondary {
+        background-color: transparent;
+        border-color: $color-gray-50;
+        color: $color-gray-50;
+    }
+
+    &--tertiary {
+        background-color: $color-gray-50;
+        color: $color-black;
+    }
+}

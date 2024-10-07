@@ -7,6 +7,6 @@ createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
   <StrictMode>
     <Rotas />
-  </StrictMode>,
+  </StrictMode>
   </BrowserRouter>
 )

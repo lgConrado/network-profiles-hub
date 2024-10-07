@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: $font-primary;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  html ::-webkit-scrollbar {
+    height: 0.5rem;
+    width: 0.5rem;
+  }
+  
+  html ::-webkit-scrollbar-thumb {
+    background: $color-black;
+    border-radius: 3.5rem;
+  }
+  
+  html ::-webkit-scrollbar-track {
+    background-color: $color-gray-50;
+  }
+  
+  ::selection {
+    background-color: $color-gray-50;
+    color: $color-black;
+    font-weight: 700;
+  }
+  
+  :root {
+    background-color: $color-black;
+    color: $color-gray-50;
+    font-size: 100%;
+    font-synthesis: none;
+    height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    text-rendering: optimizeLegibility;
+  }
