@@ -1,9 +1,13 @@
-import ModalPerfil from "../../components/Perfil"
+import ModalPerfil from "../../components/Perfil";
+import Skills from "../../components/Skills";
 
 const Perfil = () => {
   return (
-    <ModalPerfil/>
-  )
-}
+    <main className="pg--perfil">
+      <ModalPerfil />
+      <Skills />
+    </main>
+  );
+};
 
-export default Perfil
+export default Perfil;
