@@ -1,4 +1,5 @@
 import ModalPerfil from "../../components/Perfil";
+import Projects from "../../components/Projects";
 import Skills from "../../components/Skills";
 
 const Perfil = () => {
@@ -6,6 +7,7 @@ const Perfil = () => {
     <main className="pg--perfil">
       <ModalPerfil />
       <Skills />
+      <Projects/>
     </main>
   );
 };
