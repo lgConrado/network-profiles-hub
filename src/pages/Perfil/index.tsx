@@ -1,3 +1,4 @@
+import Button from "../../components/Button";
 import ModalPerfil from "../../components/Perfil";
 import Projects from "../../components/Projects";
 import Skills from "../../components/Skills";
@@ -8,6 +9,7 @@ const Perfil = () => {
       <ModalPerfil />
       <Skills />
       <Projects/>
+      <Button/>
     </main>
   );
 };

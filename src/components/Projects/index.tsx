@@ -38,6 +38,17 @@ const Projects = () => {
           <a href="">Saiba mais</a>
           <a href="">Editar projeto</a>
         </div>
+        <div>
+          <img src={projectimg} alt="" />
+          <h3>Nome do projeto</h3>
+          <ul>
+            <li>Ferramenta utilizada 01;</li>
+            <li>Ferramenta utilizada 02;</li>
+            <li>Ferramenta utilizada 03;</li>
+          </ul>
+          <a href="">Saiba mais</a>
+          <a href="">Editar projeto</a>
+        </div>
       </div>
     </section>
   );
