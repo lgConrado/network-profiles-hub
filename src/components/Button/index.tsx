@@ -1,9 +1,18 @@
-const Button = () => {
+const Button = ({
+  texto,
+  tipo,
+}: {
+  texto: string;
+  tipo: "primario" | "secundario";
+}) => {
   return (
-    <div className="container--buttons">
-      <button className="button button--secondary">Editar perfil</button>
-      <button className="button button--tertiary">Adicionar projeto</button>
-    </div>
+    <>
+      {tipo === "primario" ? (
+        <button className="button button--secondary">{texto}</button>
+      ) : (
+        <button className="button button--tertiary">{texto}</button>
+      )}
+    </>
   );
 };
 

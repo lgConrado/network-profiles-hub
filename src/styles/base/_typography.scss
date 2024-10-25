@@ -1,18 +1,52 @@
 .heading {
-    &--primary{
-        color: $color-black;
-        font-size: 2.5rem;
-        font-weight: 700;
+  &--primary {
+    color: $color-black;
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  &--secondary {
+    color: $color-gray-50;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  &--tertiary {
+    color: $color-gray-50;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  &--quaternary {
+    color: $color-gray-50;
+    font-size: 2rem;
+    font-weight: 600;
+    position: relative;
+
+    &::before {
+      content: "";
+      background-color: $color-gray-50;
+      height: 0.125rem;
+      width: 18rem;
+      right: 100%;
+      margin-right: 4rem;
+      position: absolute;
+      top: 50%;
     }
-    &--secondary{
-        color: $color-gray-50;
-        font-size: 2rem;
-        font-weight: 600;
+
+    &::after {
+      content: "";
+      background-color: $color-gray-50;
+      height: 0.125rem;
+      width: 18rem;
+      left: 100%;
+      margin-left: 4rem;
+      position: absolute;
+      top: 50%;
     }
+  }
 }
 
 .text {
-    color: $color-gray-50;
-    font-size: 1rem;
-    font-weight: 400;
+  color: $color-gray-50;
+  font-size: 1rem;
+  font-weight: 400;
 }

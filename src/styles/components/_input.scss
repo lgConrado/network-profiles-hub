@@ -30,10 +30,7 @@
   }
 }
 
-.search {
-  display: flex;
-  justify-content: center;
-  & > input {
+.input--search {
     background-color: transparent;
     border: 0.125rem solid $color-gray-50;
     border-radius: 0.5rem;
@@ -42,4 +39,3 @@
     color: $color-gray-50;
     width: 28rem;
   }
-}

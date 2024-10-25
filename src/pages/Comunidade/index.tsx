@@ -1,11 +1,9 @@
-import Search from "../../components/Search";
-import Users from "../../components/Users";
+import SectionSearch from "../../components/Section/Search";
 
 const Comunidade = () => {
   return (
     <>
-      <Search />
-      <Users />
+      <SectionSearch />
     </>
   );
 };

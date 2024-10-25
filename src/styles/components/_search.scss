@@ -1,0 +1,23 @@
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+  padding: 4rem;
+
+  &__input {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &__content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4rem;
+    }
+  }
+}

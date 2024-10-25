@@ -1,5 +1,12 @@
 .pg--perfil {
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+  padding: 2rem 4rem;
+
+  &__buttons {
     display: flex;
-    flex-direction: column;
-    gap: 8rem;
+    gap: 4rem;
+    justify-content: end;
+  }
 }
