@@ -10,8 +10,8 @@ const Perfil = () => {
       <SectionSkills />
       <SectionProjects />
       <div className="pg--perfil__buttons">
-        <Button tipo="primario" texto="Editar perfil" />
-        <Button tipo="secundario" texto="Adicionar projeto" />
+        <Button tipo="secundario" texto="Editar perfil" />
+        <Button tipo="terciario" texto="Adicionar projeto" />
       </div>
     </main>
   );
