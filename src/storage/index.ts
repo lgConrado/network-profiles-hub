@@ -1,7 +1,7 @@
 const useLocalStorage = () => {
     const ADD_LocalStorage = (key: string, value: string) => {
       if (value !== undefined && value !== "") {
-        return localStorage.setItem(key, value);
+        return localStorage.setItem(key, JSON.stringify(value));
       }
     };
   
