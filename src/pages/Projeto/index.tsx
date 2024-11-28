@@ -7,6 +7,26 @@ const Projeto = () => {
   const [element, setElement] = useState<JSX.Element | null>(null);
   const [keyVersion, setKeyVersion] = useState(1);
 
+  const [projeto, setProjeto] = useState<{
+    nomeProjeto: string;
+    fotoCapa: string;
+    hospedagem: string;
+    prototipo: string;
+    design: string;
+    aplicacao: string;
+    descricaoProjeto: string;
+    tecUtilizadas: string;
+  }>({
+    nomeProjeto: "",
+    fotoCapa: "",
+    hospedagem: "",
+    prototipo: "",
+    design: "",
+    aplicacao: "",
+    descricaoProjeto: "",
+    tecUtilizadas: "",
+  });
+
   useEffect(() => {
     setKeyVersion((prevKey) => prevKey + 1);
 
@@ -46,27 +66,69 @@ const Projeto = () => {
       <div className="pg--projeto__fieldset">
         <div className="pg--projeto__fieldset__input">
           <label htmlFor="nomeProjeto">Nome do projeto</label>
-          <input type="text" id="nomeProjeto" />
+          <input
+            type="text"
+            id="nomeProjeto"
+            value={projeto.nomeProjeto}
+            onChange={(e) => {
+              setProjeto({ ...projeto, nomeProjeto: e.target.value });
+            }}
+          />
         </div>
         <div className="pg--projeto__fieldset__input">
           <label htmlFor="fotoCapa">Foto de capa</label>
-          <input type="text" id="fotoCapa" />
+          <input
+            type="text"
+            id="fotoCapa"
+            value={projeto.fotoCapa}
+            onChange={(e) => {
+              setProjeto({ ...projeto, fotoCapa: e.target.value });
+            }}
+          />
         </div>
         <div className="pg--projeto__fieldset__input">
           <label htmlFor="hospedagem">Hospedagem</label>
-          <input type="text" id="hospedagem" />
+          <input
+            type="text"
+            id="hospedagem"
+            value={projeto.hospedagem}
+            onChange={(e) => {
+              setProjeto({ ...projeto, hospedagem: e.target.value });
+            }}
+          />
         </div>
         <div className="pg--projeto__fieldset__input">
           <label htmlFor="prototipo">Protótipo</label>
-          <input type="text" id="prototipo" />
+          <input
+            type="text"
+            id="prototipo"
+            value={projeto.prototipo}
+            onChange={(e) => {
+              setProjeto({ ...projeto, prototipo: e.target.value });
+            }}
+          />
         </div>
         <div className="pg--projeto__fieldset__input">
           <label htmlFor="design">Design</label>
-          <input type="text" id="design" />
+          <input
+            type="text"
+            id="design"
+            value={projeto.design}
+            onChange={(e) => {
+              setProjeto({ ...projeto, design: e.target.value });
+            }}
+          />
         </div>
         <div className="pg--projeto__fieldset__input">
           <label htmlFor="aplicacao">Aplicação</label>
-          <input type="text" id="aplicacao" />
+          <input
+            type="text"
+            id="aplicacao"
+            value={projeto.aplicacao}
+            onChange={(e) => {
+              setProjeto({ ...projeto, aplicacao: e.target.value });
+            }}
+          />
         </div>
         <div className="pg--projeto__fieldset__input">
           <label htmlFor="descricaoProjeto">Descrição do projeto</label>
