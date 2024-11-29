@@ -68,10 +68,10 @@ const InfoPerfil = () => {
       <h1 className="heading--primary">Informações pessoais</h1>
       <div className="pg--projeto__fieldset">
         <div className="pg--projeto__fieldset__input">
-          <label htmlFor="nomeProjeto">Foto do perfil</label>
+          <label htmlFor="fotoPerfil">Foto do perfil</label>
           <input
             type="text"
-            id="nomeProjeto"
+            id="fotoPerfil"
             value={infoPerfil.fotoPerfil}
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, fotoPerfil: e.target.value });
@@ -79,10 +79,10 @@ const InfoPerfil = () => {
           />
         </div>
         <div className="pg--projeto__fieldset__input">
-          <label htmlFor="fotoCapa">Linkedin</label>
+          <label htmlFor="linkedin">Linkedin</label>
           <input
             type="text"
-            id="fotoCapa"
+            id="linkedin"
             value={infoPerfil.linkedin}
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, linkedin: e.target.value });
@@ -90,10 +90,10 @@ const InfoPerfil = () => {
           />
         </div>
         <div className="pg--projeto__fieldset__input">
-          <label htmlFor="hospedagem">Nome</label>
+          <label htmlFor="nome">Nome</label>
           <input
             type="text"
-            id="hospedagem"
+            id="nome"
             value={infoPerfil.nome}
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, nome: e.target.value });
@@ -101,10 +101,10 @@ const InfoPerfil = () => {
           />
         </div>
         <div className="pg--projeto__fieldset__input">
-          <label htmlFor="prototipo">Behance</label>
+          <label htmlFor="behance">Behance</label>
           <input
             type="text"
-            id="prototipo"
+            id="behance"
             value={infoPerfil.behance}
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, behance: e.target.value });
@@ -112,10 +112,10 @@ const InfoPerfil = () => {
           />
         </div>
         <div className="pg--projeto__fieldset__input">
-          <label htmlFor="design">Área de atuação</label>
+          <label htmlFor="areaAtuacao">Área de atuação</label>
           <input
             type="text"
-            id="design"
+            id="areaAtuacao"
             value={infoPerfil.areaAtuacao}
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, areaAtuacao: e.target.value });
@@ -123,10 +123,10 @@ const InfoPerfil = () => {
           />
         </div>
         <div className="pg--projeto__fieldset__input">
-          <label htmlFor="aplicacao">Figma</label>
+          <label htmlFor="figma">Figma</label>
           <input
             type="text"
-            id="aplicacao"
+            id="figma"
             value={infoPerfil.figma}
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, figma: e.target.value });
@@ -134,10 +134,10 @@ const InfoPerfil = () => {
           />
         </div>
         <div className="pg--projeto__fieldset__input">
-          <label htmlFor="aplicacao">Discord</label>
+          <label htmlFor="discord">Discord</label>
           <input
             type="text"
-            id="aplicacao"
+            id="discord"
             value={infoPerfil.discord}
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, discord: e.target.value });
@@ -145,10 +145,10 @@ const InfoPerfil = () => {
           />
         </div>
         <div className="pg--projeto__fieldset__input">
-          <label htmlFor="aplicacao">Github</label>
+          <label htmlFor="github">Github</label>
           <input
             type="text"
-            id="aplicacao"
+            id="github"
             value={infoPerfil.github}
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, github: e.target.value });
@@ -156,10 +156,10 @@ const InfoPerfil = () => {
           />
         </div>
         <div className="pg--projeto__fieldset__input">
-          <label htmlFor="descricaoProjeto">Biografia</label>
+          <label htmlFor="biografia">Biografia</label>
           <textarea
             name=""
-            id="descricaoProjeto"
+            id="biografia"
             value={infoPerfil.biografia}
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, biografia: e.target.value });
@@ -167,10 +167,10 @@ const InfoPerfil = () => {
           ></textarea>
         </div>
         <div className="pg--projeto__fieldset__input">
-          <label htmlFor="descricaoProjeto">Skills</label>
+          <label htmlFor="skills">Skills</label>
           <input
             type="text"
-            id="tecnologiasUtilizadas"
+            id="skills"
             value={tecnologia}
             onChange={(e) => setTecnologia(e.target.value)}
           />

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useLogin from "../../api/auth";
+import Connection from "../../api/connection";
 
 const ModalLogin = () => {
   const [modulo, setModulo] = useState("login");
@@ -35,6 +36,38 @@ const ModalLogin = () => {
   const Logar = () => {
     login.email !== "" && login.senha !== ""
       ? Login(login)
+      : alert("Verificar se todos os campos foram preenchidos");
+  };
+
+  const CadastraUsuario = async () => {
+    try {
+      const response = await fetch(`${Connection()}usuarios`, {
+        method: "POST",
+        headers: { "Content-type": "aplication/json" },
+        body: JSON.stringify(registrar),
+      });
+
+      const responseData = response.ok
+        ? async () => {
+            await response.json();
+            alert("Cadastro realizado!");
+          }
+        : Promise.reject(
+            `Erro na requisição: ${response.status} - ${response.statusText}`
+          );
+      return responseData;
+    } catch (error) {
+      throw new Error("Erro na requisição");
+    }
+  };
+
+  const Registrar = () => {
+    registrar.nome !== "" &&
+    registrar.email != "" &&
+    registrar.senha !== "" &&
+    registrar.confirmarSenha !== "" &&
+    matchPassword() === true
+      ? CadastraUsuario()
       : alert("Verificar se todos os campos foram preenchidos");
   };
 
@@ -167,7 +200,12 @@ const ModalLogin = () => {
               />
             </form>
             <div>
-              <button className="button button--primary">CRIAR CONTA</button>
+              <button
+                className="button button--primary"
+                onClick={() => Registrar()}
+              >
+                CRIAR CONTA
+              </button>
             </div>
           </div>
         </div>
