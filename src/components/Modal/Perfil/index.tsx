@@ -3,7 +3,7 @@ import linkedin from "../../../assets/linkedin.svg";
 import figma from "../../../assets/figma.svg";
 import discord from "../../../assets/discord.svg";
 import github from "../../../assets/github.svg";
-import perfil from "../../../assets/perfil.png";
+import perfilimg from "../../../assets/perfil.png";
 import getData from "../../../api/restfull/get";
 import useLocalStorage from "../../../storage";
 import { useEffect, useState } from "react";
@@ -11,14 +11,15 @@ import { useEffect, useState } from "react";
 const ModalPerfil = () => {
   const { GET_LocalStorage } = useLocalStorage();
 
-  const [usuarioLogado, setUsuarioLogado] = useState<{
+  const [usuario, setUsuario] = useState<{
     id: number;
     nome: string;
     email: string;
   }>({ id: 0, nome: "", email: "" });
 
-  const [perfilUsuarioLogado, setPerfilUsuarioLogado] = useState<{
+  const [perfil, setPerfil] = useState<{
     areaAtuacao: string;
+    nome: string;
     biografia: string;
     linkedin: string;
     behance: string;
@@ -28,6 +29,7 @@ const ModalPerfil = () => {
     foto: string;
   }>({
     areaAtuacao: "",
+    nome: "",
     biografia: "",
     linkedin: "",
     behance: "",
@@ -40,14 +42,22 @@ const ModalPerfil = () => {
   useEffect(() => {
     const ObterPerfil = async () => {
       const usuarioLogadoString = GET_LocalStorage("perfil");
+      const path = window.location.pathname;
 
       if (usuarioLogadoString) {
         const usuarioLogadoJSON = JSON.parse(usuarioLogadoString);
-        const buscaPerfil = await getData("perfis", usuarioLogadoJSON.id);
 
-        setPerfilUsuarioLogado({
-          ...perfilUsuarioLogado,
+        const perfilIdFromPath = Number(path.split("/").pop());
+
+        const buscaPerfil = await getData(
+          "perfis",
+          isNaN(perfilIdFromPath) ? usuarioLogadoJSON.id : perfilIdFromPath
+        );
+
+        setPerfil({
+          ...perfil,
           areaAtuacao: buscaPerfil["Area de atuação"],
+          nome: buscaPerfil.Nome,
           behance: buscaPerfil.Behance,
           biografia: buscaPerfil.Biografia,
           discord: buscaPerfil.Discord,
@@ -57,8 +67,8 @@ const ModalPerfil = () => {
           linkedin: buscaPerfil.Linkedin,
         });
 
-        setUsuarioLogado({
-          ...usuarioLogado,
+        setUsuario({
+          ...usuario,
           id: usuarioLogadoJSON.id,
           nome: usuarioLogadoJSON.nome,
           email: usuarioLogadoJSON.email,
@@ -74,63 +84,40 @@ const ModalPerfil = () => {
         <div className="modal-perfil__header__content">
           <img
             src={
-              perfilUsuarioLogado.foto === null ||
-              perfilUsuarioLogado.foto === ""
-                ? perfil
-                : perfilUsuarioLogado.foto
+              perfil.foto === null || perfil.foto === ""
+                ? perfilimg
+                : perfil.foto
             }
             alt="Foto de perfil"
             className="modal-perfil__header__cover"
           />
-          <h2 className="heading--secondary">{usuarioLogado.nome}</h2>
+          <h2 className="heading--secondary">{perfil.nome}</h2>
         </div>
         <h3 className="heading--tertiary">
-          {perfilUsuarioLogado.areaAtuacao === null ||
-          perfilUsuarioLogado.areaAtuacao === ""
+          {perfil.areaAtuacao === null || perfil.areaAtuacao === ""
             ? "Seu cargo aqui"
-            : perfilUsuarioLogado.areaAtuacao}
+            : perfil.areaAtuacao}
         </h3>
       </div>
       <p className="text">
-        {perfilUsuarioLogado.biografia === null ||
-        perfilUsuarioLogado.biografia === ""
+        {perfil.biografia === null || perfil.biografia === ""
           ? "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni ipsum porro ea est! Laborum consectetur eos aspernatur neque amet inventore ex culpa pariatur fugiat nam. Inventore vitae perspiciatis nisi distinctio."
-          : perfilUsuarioLogado.biografia}
+          : perfil.biografia}
       </p>
       <div className="modal-perfil__links">
-        <a
-          href={perfilUsuarioLogado.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={perfil.linkedin} target="_blank" rel="noopener noreferrer">
           <img src={linkedin} />
         </a>
-        <a
-          href={perfilUsuarioLogado.behance}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={perfil.behance} target="_blank" rel="noopener noreferrer">
           <img src={behance} />
         </a>
-        <a
-          href={perfilUsuarioLogado.figma}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={perfil.figma} target="_blank" rel="noopener noreferrer">
           <img src={figma} />
         </a>
-        <a
-          href={perfilUsuarioLogado.discord}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={perfil.discord} target="_blank" rel="noopener noreferrer">
           <img src={discord} />
         </a>
-        <a
-          href={perfilUsuarioLogado.github}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={perfil.github} target="_blank" rel="noopener noreferrer">
           <img src={github} />
         </a>
       </div>

@@ -11,7 +11,7 @@ const Rotas = () => {
     <Routes>
       <Route path="/" element={<Login />}></Route>
       <Route path="/app" element={<Default />}>
-        <Route path="perfil" element={<Perfil />}></Route>
+        <Route path="perfil/*" element={<Perfil />}></Route>
         <Route path="comunidade" element={<Comunidade />}></Route>
         <Route path="projeto/*" element={<Projeto />}></Route>
         <Route path="info-perfil/*" element={<InfoPerfil />}></Route>

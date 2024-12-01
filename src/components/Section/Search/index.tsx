@@ -1,40 +1,137 @@
 import projectimg from "../../../assets/modal-projects.svg";
-import IProject from "../../../interfaces/IProject";
 import ModalProject from "../../Modal/Project";
-import perfil from "../../../assets/perfil.png";
+import perfilimg from "../../../assets/perfil.png";
 import ModalUser from "../../Modal/User";
-import IUser from "../../../interfaces/IUser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useLocalStorage from "../../../storage";
+import getData from "../../../api/restfull/get";
 
 const SectionSearch = () => {
   const [inputSearch, setInputSearch] = useState("");
-  const list: IProject[] = [
-    {
-      img: projectimg,
-      titulo: "site 01",
-      ferramentas: ["Ferramenta 01", "Ferramenta 02", "Ferramenta 03"],
-      link: "",
-    },
-    {
-      img: projectimg,
-      titulo: "Projeto 02",
-      ferramentas: ["Ferramenta 04", "Ferramenta 05", "Ferramenta 06"],
-      link: "",
-    },
-  ];
+  const { GET_LocalStorage } = useLocalStorage();
 
-  const usuarios: IUser[] = [
+  const [projetos, setProjetos] = useState<
     {
-      img: perfil,
-      nome: "Luiz Gustavo",
-      cargo: "Desenvolvedor de Software",
-    },
+      id: number;
+      usuarioId: number;
+      titulo: string;
+      fotoCapa: string;
+      hospedagem: string;
+      prototipo: string;
+      design: string;
+      aplicacao: string;
+      descricao: string;
+      tecnologias: string[];
+    }[]
+  >([]);
+
+  const [perfis, setPerfis] = useState<
     {
-      img: perfil,
-      nome: "Harrison Fabiano",
-      cargo: "Web Design",
-    },
-  ];
+      id: number;
+      usuarioId: number;
+      nome: string;
+      areaAtuacao: string;
+      biografia: string;
+      linkedin: string;
+      behance: string;
+      figma: string;
+      discord: string;
+      github: string;
+      foto: string;
+      skills: string[];
+    }[]
+  >([]);
+
+  useEffect(() => {
+    const ObterProjetos = async () => {
+      const usuarioLogadoString = GET_LocalStorage("perfil");
+
+      if (usuarioLogadoString) {
+        const usuarioLogadoJSON = JSON.parse(usuarioLogadoString);
+        const buscaProjetos = await getData("projetos");
+
+        const projetosTemp: typeof projetos = [];
+
+        let i = 0;
+        while (i < buscaProjetos.length) {
+          const newArray = buscaProjetos[i].Tecnologias
+            ? buscaProjetos[i].Tecnologias.split(",").map(
+                (tecnologia: string) => tecnologia.trim()
+              )
+            : [];
+
+          projetosTemp.push({
+            id: buscaProjetos[i].id,
+            usuarioId: buscaProjetos[i]["usuario_id"],
+            titulo: buscaProjetos[i].Titulo,
+            fotoCapa: buscaProjetos[i]["Foto Capa"],
+            hospedagem: buscaProjetos[i].Hospedagem,
+            prototipo: buscaProjetos[i]["Protótipo"],
+            design: buscaProjetos[i].Design,
+            aplicacao: buscaProjetos[i]["Aplicação"],
+            descricao: buscaProjetos[i].Descrição,
+            tecnologias: newArray,
+          });
+          i++;
+        }
+
+        const filteredProjetos = projetosTemp.filter(
+          (projeto: { usuarioId: number }) => {
+            return projeto.usuarioId !== usuarioLogadoJSON.id;
+          }
+        );
+
+        setProjetos(filteredProjetos);
+      }
+    };
+
+    const ObterPerfil = async () => {
+      const usuarioLogadoString = GET_LocalStorage("perfil");
+
+      if (usuarioLogadoString) {
+        const usuarioLogadoJSON = JSON.parse(usuarioLogadoString);
+        const buscaPerfis = await getData("perfis");
+
+        const perfisTemp: typeof perfis = [];
+
+        let i = 0;
+        while (i < buscaPerfis.length) {
+          const newArray = buscaPerfis[i].Skills
+            ? buscaPerfis[i].Skills.split(",").map((tecnologia: string) =>
+                tecnologia.trim()
+              )
+            : [];
+
+          perfisTemp.push({
+            id: buscaPerfis[i].id,
+            usuarioId: buscaPerfis[i]["usuario_id"],
+            areaAtuacao: buscaPerfis[i]["Área de atuação"],
+            behance: buscaPerfis[i].Behance,
+            biografia: buscaPerfis[i].Biografia,
+            discord: buscaPerfis[i].Discord,
+            figma: buscaPerfis[i].Figma,
+            foto: buscaPerfis[i].Foto,
+            github: buscaPerfis[i].Github,
+            linkedin: buscaPerfis[i].Linkedin,
+            nome: buscaPerfis[i].Nome,
+            skills: newArray,
+          });
+          i++;
+        }
+
+        const filteredPerfis = perfisTemp.filter(
+          (perfil: { usuarioId: number }) => {
+            return perfil.usuarioId !== usuarioLogadoJSON.id;
+          }
+        );
+
+        setPerfis(filteredPerfis);
+      }
+    };
+    ObterPerfil();
+    ObterProjetos();
+  }, []); 
+
   return (
     <section className="search">
       <div className="search__input">
@@ -50,59 +147,159 @@ const SectionSearch = () => {
         <h3 className="heading--tertiary">
           Usuários encontrados:{" "}
           {
-            usuarios.filter((user: IUser) => {
-              return String(user.nome.toLowerCase()).includes(
-                String(inputSearch.toLowerCase())
-              );
-            }).length
+            perfis.filter(
+              (perfil: {
+                id: number;
+                usuarioId: number;
+                nome: string;
+                areaAtuacao: string;
+                biografia: string;
+                linkedin: string;
+                behance: string;
+                figma: string;
+                discord: string;
+                github: string;
+                foto: string;
+                skills: string[];
+              }) => {
+                return String(perfil.nome.toLowerCase()).includes(
+                  String(inputSearch.toLowerCase())
+                );
+              }
+            ).length
           }
         </h3>
         <div className="search__container__content">
-          {usuarios
-            .filter((user: IUser) => {
-              return String(user.nome.toLowerCase()).includes(
-                String(inputSearch.toLowerCase())
-              );
-            })
-            .map((usuario: IUser, index) => {
-              return (
-                <ModalUser
-                  key={index}
-                  cargo={usuario.cargo}
-                  img={usuario.img}
-                  nome={usuario.nome}
-                />
-              );
-            })}
+          {perfis
+            .filter(
+              (perfil: {
+                id: number;
+                usuarioId: number;
+                nome: string;
+                areaAtuacao: string;
+                biografia: string;
+                linkedin: string;
+                behance: string;
+                figma: string;
+                discord: string;
+                github: string;
+                foto: string;
+                skills: string[];
+              }) => {
+                return String(perfil.nome.toLowerCase()).includes(
+                  String(inputSearch.toLowerCase())
+                );
+              }
+            )
+            .map(
+              (
+                perfil: {
+                  id: number;
+                  usuarioId: number;
+                  nome: string;
+                  areaAtuacao: string;
+                  biografia: string;
+                  linkedin: string;
+                  behance: string;
+                  figma: string;
+                  discord: string;
+                  github: string;
+                  foto: string;
+                  skills: string[];
+                },
+                index
+              ) => {
+                return (
+                  <ModalUser
+                    key={index}
+                    cargo={perfil.areaAtuacao}
+                    img={
+                      perfil.foto === "" || perfil.foto === null
+                        ? perfilimg
+                        : perfil.foto
+                    }
+                    link={`perfil/${perfil.usuarioId}`}
+                    nome={perfil.nome}
+                  />
+                );
+              }
+            )}
         </div>
       </div>
       <div className="search__container">
         <h3 className="heading--tertiary">
           Projetos encontrados:{" "}
           {
-            list.filter((project: IProject) => {
-              return String(project.titulo.toLowerCase()).includes(String(inputSearch.toLowerCase()));
-            }).length
+            projetos.filter(
+              (projeto: {
+                id: number;
+                usuarioId: number;
+                titulo: string;
+                fotoCapa: string;
+                hospedagem: string;
+                prototipo: string;
+                design: string;
+                aplicacao: string;
+                descricao: string;
+                tecnologias: string[];
+              }) => {
+                return String(projeto.titulo.toLowerCase()).includes(
+                  String(inputSearch.toLowerCase())
+                );
+              }
+            ).length
           }
         </h3>
         <div
           className="search__container__content"
           style={{ justifyContent: "start" }}
         >
-          {list
-            .filter((project: IProject) => {
-                return String(project.titulo.toLowerCase()).includes(String(inputSearch.toLowerCase()));
-            })
-            .map((projeto: IProject) => {
-              return (
-                <ModalProject
-                  ferramentas={projeto.ferramentas}
-                  img={projeto.img}
-                  link={projeto.link}
-                  titulo={projeto.titulo}
-                />
-              );
-            })}
+          {projetos
+            .filter(
+              (projeto: {
+                id: number;
+                usuarioId: number;
+                titulo: string;
+                fotoCapa: string;
+                hospedagem: string;
+                prototipo: string;
+                design: string;
+                aplicacao: string;
+                descricao: string;
+                tecnologias: string[];
+              }) => {
+                return String(projeto.titulo.toLowerCase()).includes(
+                  String(inputSearch.toLowerCase())
+                );
+              }
+            )
+            .map(
+              (projeto: {
+                id: number;
+                usuarioId: number;
+                titulo: string;
+                fotoCapa: string;
+                hospedagem: string;
+                prototipo: string;
+                design: string;
+                aplicacao: string;
+                descricao: string;
+                tecnologias: string[];
+              }) => {
+                return (
+                  <ModalProject
+                    ferramentas={projeto.tecnologias}
+                    img={
+                      projeto.fotoCapa === "" || projeto.fotoCapa === null
+                        ? projectimg
+                        : projeto.fotoCapa
+                    }
+                    link={`projeto/${projeto.id}`}
+                    titulo={projeto.titulo}
+                  />
+                );
+              }
+            )}
         </div>
       </div>
     </section>

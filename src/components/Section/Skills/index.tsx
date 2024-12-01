@@ -10,10 +10,16 @@ const SectionSkills = () => {
   useEffect(() => {
     const ObterSkills = async () => {
       const usuarioLogadoString = GET_LocalStorage("perfil");
+      const path = window.location.pathname;
 
       if (usuarioLogadoString) {
         const usuarioLogadoJSON = JSON.parse(usuarioLogadoString);
-        const buscaPerfil = await getData("perfis", usuarioLogadoJSON.id);
+        const perfilIdFromPath = Number(path.split("/").pop());
+
+        const buscaPerfil = await getData(
+          "perfis",
+          isNaN(perfilIdFromPath) ? usuarioLogadoJSON.id : perfilIdFromPath
+        );
 
         const newArray = buscaPerfil.Skills.split(",").map((skill: string) =>
           skill.trim()

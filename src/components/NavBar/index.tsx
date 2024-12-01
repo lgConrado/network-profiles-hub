@@ -62,13 +62,13 @@ const NavBar = () => {
       </div>
       <ul>
         <li
-          data-actived={path === "/app/perfil"}
+          data-actived={path.includes("/app/perfil")}
           onClick={() => navigate("/app/perfil")}
         >
           Meu perfil
         </li>
         <li
-          data-actived={path === "/app/comunidade"}
+          data-actived={path.includes("/app/comunidade")}
           onClick={() => navigate("/app/comunidade")}
         >
           Comunidade

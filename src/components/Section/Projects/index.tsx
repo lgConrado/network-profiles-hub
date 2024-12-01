@@ -23,10 +23,16 @@ const SectionProjects = () => {
   useEffect(() => {
     const ObterProjetos = async () => {
       const usuarioLogadoString = GET_LocalStorage("perfil");
+      const path = window.location.pathname;
 
       if (usuarioLogadoString) {
         const usuarioLogadoJSON = JSON.parse(usuarioLogadoString);
-        const buscaProjetos = await getData("projetos", usuarioLogadoJSON.id);
+        const perfilIdFromPath = Number(path.split("/").pop());
+
+        const buscaProjetos = await getData(
+          "projetos",
+          isNaN(perfilIdFromPath) ? usuarioLogadoJSON.id : perfilIdFromPath
+        );
 
         const projetosTemp: typeof projetos = [];
 
@@ -88,7 +94,7 @@ const SectionProjects = () => {
                         ? projectimg
                         : projeto.fotoCapa
                     }
-                    link={`projeto/${projeto.id}`}
+                    link={`/app/projeto/${projeto.id}`}
                     titulo={projeto.titulo}
                     key={index}
                   />
