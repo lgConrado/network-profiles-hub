@@ -5,7 +5,7 @@ const Button = ({
 }: {
   texto: string;
   tipo: "primario" | "secundario" | "terciario";
-  onClick: () => void;
+  onClick?: () => void;
 }) => {
   return (
     <>
