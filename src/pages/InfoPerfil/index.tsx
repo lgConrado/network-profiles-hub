@@ -1,35 +1,107 @@
 import { useEffect, useState } from "react";
 import Button from "../../components/Button";
+import useLocalStorage from "../../storage";
+import getData from "../../api/restfull/get";
+import updateData from "../../api/restfull/update";
 
 const InfoPerfil = () => {
-  const [tecnologia, setTecnologia] = useState("");
-  const [tecnologias, setTecnologias] = useState<string[]>([]);
+  const [skill, setSkill] = useState("");
   const [element, setElement] = useState<JSX.Element | null>(null);
   const [keyVersion, setKeyVersion] = useState(1);
+  const { GET_LocalStorage } = useLocalStorage();
+  const path = window.location.pathname;
+
+  const [usuarioLogado, setUsuarioLogado] = useState<{
+    id: number;
+    nome: string;
+    email: string;
+  }>({ id: 0, nome: "", email: "" });
 
   const [infoPerfil, setInfoPerfil] = useState<{
-    fotoPerfil: string;
-    linkedin: string;
+    id: number;
     nome: string;
+    foto: string;
+    linkedin: string;
     behance: string;
     areaAtuacao: string;
     figma: string;
     discord: string;
     github: string;
     biografia: string;
-    skills: string;
+    skills: string[];
   }>({
-    fotoPerfil: "",
-    linkedin: "",
+    id: 0,
     nome: "",
+    foto: "",
+    linkedin: "",
     behance: "",
     areaAtuacao: "",
     figma: "",
     discord: "",
     github: "",
     biografia: "",
-    skills: "",
+    skills: [],
   });
+
+  useEffect(() => {
+    const ObterInfo = async () => {
+      const usuarioLogadoString = GET_LocalStorage("perfil");
+
+      if (usuarioLogadoString) {
+        const usuarioLogadoJSON = JSON.parse(usuarioLogadoString);
+
+        setUsuarioLogado({
+          ...usuarioLogado,
+          id: usuarioLogadoJSON.id,
+          nome: usuarioLogadoJSON.nome,
+          email: usuarioLogadoJSON.email,
+        });
+
+        const buscaPerfil = await getData("perfis");
+
+        const perfilIdFromPath = Number(path.split("/").pop());
+
+        const perfilFiltrado = buscaPerfil.filter(
+          (perfil: { usuario_id: number }) => {
+            return perfil.usuario_id === perfilIdFromPath;
+          }
+        );
+
+        const newArray = perfilFiltrado[0].Skills
+          ? perfilFiltrado[0].Skills.split(",").map((tecnologia: string) =>
+              tecnologia.trim()
+            )
+          : [];
+
+        setInfoPerfil({
+          ...InfoPerfil,
+          id: perfilFiltrado[0].id,
+          nome: perfilFiltrado[0].Nome,
+          foto: perfilFiltrado[0].Foto === "" ? "" : perfilFiltrado[0].Foto,
+          areaAtuacao:
+            perfilFiltrado[0]["Área de atuação"] === ""
+              ? ""
+              : perfilFiltrado[0]["Área de atuação"],
+          behance:
+            perfilFiltrado[0].Behance === "" ? "" : perfilFiltrado[0].Behance,
+          biografia:
+            perfilFiltrado[0].Biografia === ""
+              ? ""
+              : perfilFiltrado[0].Biografia,
+          discord:
+            perfilFiltrado[0].Discord === "" ? "" : perfilFiltrado[0].Discord,
+          figma: perfilFiltrado[0].Figma === "" ? "" : perfilFiltrado[0].Figma,
+          github:
+            perfilFiltrado[0].Github === "" ? "" : perfilFiltrado[0].Github,
+          linkedin:
+            perfilFiltrado[0].Linkedin === "" ? "" : perfilFiltrado[0].Linkedin,
+          skills: newArray,
+        });
+      }
+    };
+
+    ObterInfo();
+  }, []);
 
   useEffect(() => {
     setKeyVersion((prevKey) => prevKey + 1);
@@ -40,19 +112,19 @@ const InfoPerfil = () => {
           key={keyVersion}
           className="pg--projeto__fieldset__input__tecnologias"
         >
-          {tecnologias.map((tecnologia, index) => {
+          {infoPerfil.skills.map((skill, index) => {
             return (
               <button
                 key={index}
                 onClick={() => {
-                  const listaTemp = tecnologias.filter((item) => {
-                    return item !== tecnologia;
+                  const listaTemp = infoPerfil.skills.filter((item) => {
+                    return item !== skill;
                   });
 
-                  setTecnologias([...listaTemp]);
+                  setInfoPerfil({ ...infoPerfil, skills: [...listaTemp] });
                 }}
               >
-                {tecnologia}
+                {skill}
               </button>
             );
           })}
@@ -62,22 +134,48 @@ const InfoPerfil = () => {
 
     const component = generateJSX();
     setElement(component);
-  }, [tecnologias]);
+  }, [infoPerfil.skills]);
+
+  const atualizaPerfil = () => {
+    const object = {
+      foto: infoPerfil.foto,
+      areaAtuacao: infoPerfil.areaAtuacao,
+      biografia: infoPerfil.biografia,
+      linkedin: infoPerfil.linkedin,
+      behance: infoPerfil.behance,
+      figma: infoPerfil.figma,
+      discord: infoPerfil.discord,
+      github: infoPerfil.github,
+      skills: infoPerfil.skills.join(","),
+    };
+
+    updateData("perfis", infoPerfil.id, object)
+      .then(() => {
+        alert("Perfil atualizado");
+        window.location.reload();
+      })
+      .catch(() => alert("Falha ao cadastrar projeto"));
+  };
+
   return (
     <section className="pg--projeto">
       <h1 className="heading--primary">Informações pessoais</h1>
       <div className="pg--projeto__fieldset">
-        <div className="pg--projeto__fieldset__input">
-          <label htmlFor="fotoPerfil">Foto do perfil</label>
-          <input
-            type="text"
-            id="fotoPerfil"
-            value={infoPerfil.fotoPerfil}
-            onChange={(e) => {
-              setInfoPerfil({ ...infoPerfil, fotoPerfil: e.target.value });
-            }}
-          />
-        </div>
+        <>
+          {usuarioLogado.nome === infoPerfil.nome ? (
+            <div className="pg--projeto__fieldset__input">
+              <label htmlFor="fotoPerfil">Foto do perfil</label>
+              <input
+                type="text"
+                id="fotoPerfil"
+                value={infoPerfil.foto}
+                onChange={(e) => {
+                  setInfoPerfil({ ...infoPerfil, foto: e.target.value });
+                }}
+              />
+            </div>
+          ) : null}
+        </>
         <div className="pg--projeto__fieldset__input">
           <label htmlFor="linkedin">Linkedin</label>
           <input
@@ -87,6 +185,7 @@ const InfoPerfil = () => {
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, linkedin: e.target.value });
             }}
+            readOnly={usuarioLogado.nome !== infoPerfil.nome}
           />
         </div>
         <div className="pg--projeto__fieldset__input">
@@ -98,6 +197,7 @@ const InfoPerfil = () => {
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, nome: e.target.value });
             }}
+            disabled
           />
         </div>
         <div className="pg--projeto__fieldset__input">
@@ -109,6 +209,7 @@ const InfoPerfil = () => {
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, behance: e.target.value });
             }}
+            readOnly={usuarioLogado.nome !== infoPerfil.nome}
           />
         </div>
         <div className="pg--projeto__fieldset__input">
@@ -120,6 +221,7 @@ const InfoPerfil = () => {
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, areaAtuacao: e.target.value });
             }}
+            readOnly={usuarioLogado.nome !== infoPerfil.nome}
           />
         </div>
         <div className="pg--projeto__fieldset__input">
@@ -131,6 +233,7 @@ const InfoPerfil = () => {
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, figma: e.target.value });
             }}
+            readOnly={usuarioLogado.nome !== infoPerfil.nome}
           />
         </div>
         <div className="pg--projeto__fieldset__input">
@@ -142,6 +245,7 @@ const InfoPerfil = () => {
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, discord: e.target.value });
             }}
+            readOnly={usuarioLogado.nome !== infoPerfil.nome}
           />
         </div>
         <div className="pg--projeto__fieldset__input">
@@ -153,6 +257,7 @@ const InfoPerfil = () => {
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, github: e.target.value });
             }}
+            readOnly={usuarioLogado.nome !== infoPerfil.nome}
           />
         </div>
         <div className="pg--projeto__fieldset__input">
@@ -164,32 +269,45 @@ const InfoPerfil = () => {
             onChange={(e) => {
               setInfoPerfil({ ...infoPerfil, biografia: e.target.value });
             }}
-          ></textarea>
+            readOnly={usuarioLogado.nome !== infoPerfil.nome}
+          />
         </div>
         <div className="pg--projeto__fieldset__input">
           <label htmlFor="skills">Skills</label>
           <input
             type="text"
             id="skills"
-            value={tecnologia}
-            onChange={(e) => setTecnologia(e.target.value)}
+            value={skill}
+            onChange={(e) => setSkill(e.target.value)}
+            readOnly={usuarioLogado.nome !== infoPerfil.nome}
           />
-          <span
-            onClick={() => {
-              setTecnologias([...tecnologias, tecnologia]);
-              setTecnologia("");
-            }}
-          >
-            +
-          </span>
+          {usuarioLogado.nome === infoPerfil.nome ? (
+            <span
+              onClick={() => {
+                setInfoPerfil({
+                  ...infoPerfil,
+                  skills: [...infoPerfil.skills, skill],
+                });
+                setSkill("");
+              }}
+            >
+              +
+            </span>
+          ) : null}
           {element}
         </div>
       </div>
-
-      <div className="pg--projeto__buttons">
-        <Button texto="Cancelar" tipo="terciario" />
-        <Button texto="Salvar" tipo="primario" />
-      </div>
+      <>
+        {usuarioLogado.nome === infoPerfil.nome ? (
+          <div className="pg--projeto__buttons">
+            <Button
+              texto="Salvar"
+              tipo="primario"
+              onClick={() => atualizaPerfil()}
+            />
+          </div>
+        ) : null}
+      </>
     </section>
   );
 };
