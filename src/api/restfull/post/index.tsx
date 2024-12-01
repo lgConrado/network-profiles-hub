@@ -4,7 +4,7 @@ import Connection from "../../connection";
 export default async function postData(
   object: string,
   bodyData: any,
-  authToken: boolean
+  authToken?: boolean
 ) {
   const { GET_LocalStorage } = useLocalStorage();
 

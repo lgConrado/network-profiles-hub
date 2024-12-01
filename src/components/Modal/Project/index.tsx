@@ -11,8 +11,9 @@ const ModalProject = ({ img, titulo, ferramentas, link }: IProject) => {
             return <li key={index}>{ferramenta}</li>;
           })}
         </ul>
-        <a href={link}>Saiba mais</a>
-        <a href="">Editar projeto</a>
+        <a href={link} target="_blank">
+          Saiba mais
+        </a>
       </div>
     </div>
   );

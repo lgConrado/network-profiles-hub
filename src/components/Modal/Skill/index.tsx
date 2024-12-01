@@ -14,29 +14,31 @@ import vite from "../../../assets/vite.svg";
 const ModalSkill = ({ skill }: { skill: string }) => {
   const switchImg = (img: string) => {
     switch (img) {
-      case "Javascript":
+      case "javascript":
         return js;
-      case "HTML":
+      case "html":
         return html;
-      case "CSS":
+      case "css":
         return css;
-      case "SCSS":
+      case "scss":
         return scss;
-      case "Git":
+      case "sass":
+        return scss;
+      case "git":
         return git;
-      case "Gitlab":
+      case "gitlab":
         return gitlab;
-      case "Github":
+      case "github":
         return github;
-      case "Postgre":
+      case "postgre":
         return postgre;
-      case "TS":
+      case "ts":
         return ts;
-      case "React":
+      case "react":
         return react;
-      case "Node":
+      case "node":
         return node;
-      case "Vite":
+      case "vite":
         return vite;
     }
   };
@@ -44,7 +46,7 @@ const ModalSkill = ({ skill }: { skill: string }) => {
   return (
     <div className="skill">
       <div className="skill__content">
-        <img src={switchImg(skill)} alt={`Cover ${skill}`} />
+        <img src={switchImg(skill.toLowerCase())} alt={`Cover ${skill}`} />
         <h3 className="heading--tertiary">{skill}</h3>
       </div>
     </div>
