@@ -4,7 +4,7 @@ const ModalProject = ({ img, titulo, ferramentas, link }: IProject) => {
   return (
     <div className="project-card">
       <div className="project-card__content">
-        <img src={img} alt="Capa projeto" />
+        <img src={img} alt="Capa projeto" style={{ width: "20rem", borderRadius:".5rem" }}/>
         <h3>{titulo}</h3>
         <ul>
           {ferramentas.map((ferramenta: string, index) => {
