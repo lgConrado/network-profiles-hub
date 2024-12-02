@@ -45,7 +45,6 @@ const Perfil = () => {
           <div className="pg--perfil__buttons">
             <a
               href={`info-perfil/${usuarioLogadoJSON.id}`}
-              target="_blank"
               rel="noopener noreferrer"
             >
               <Button tipo="secundario" texto="Editar perfil" />

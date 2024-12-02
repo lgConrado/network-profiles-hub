@@ -56,7 +56,7 @@ const ModalPerfil = () => {
 
         setPerfil({
           ...perfil,
-          areaAtuacao: buscaPerfil["Area de atuação"],
+          areaAtuacao: buscaPerfil["Área de atuação"],
           nome: buscaPerfil.Nome,
           behance: buscaPerfil.Behance,
           biografia: buscaPerfil.Biografia,

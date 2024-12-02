@@ -3,6 +3,7 @@ import Button from "../../components/Button";
 import useLocalStorage from "../../storage";
 import getData from "../../api/restfull/get";
 import updateData from "../../api/restfull/update";
+import { useNavigate } from "react-router-dom";
 
 const InfoPerfil = () => {
   const [skill, setSkill] = useState("");
@@ -10,6 +11,7 @@ const InfoPerfil = () => {
   const [keyVersion, setKeyVersion] = useState(1);
   const { GET_LocalStorage } = useLocalStorage();
   const path = window.location.pathname;
+  const navigate = useNavigate();
 
   const [usuarioLogado, setUsuarioLogado] = useState<{
     id: number;
@@ -152,7 +154,7 @@ const InfoPerfil = () => {
     updateData("perfis", infoPerfil.id, object)
       .then(() => {
         alert("Perfil atualizado");
-        window.location.reload();
+        navigate("/app/perfil");
       })
       .catch(() => alert("Falha ao cadastrar projeto"));
   };
