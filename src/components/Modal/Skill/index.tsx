@@ -38,6 +38,8 @@ const ModalSkill = ({ skill }: { skill: string }) => {
         return node;
       case "vite":
         return vite;
+      default:
+        return "https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-folder-icon-png-image_855010.jpg";
     }
   };
 
