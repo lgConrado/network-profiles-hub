@@ -22,8 +22,8 @@ const ModalSkill = ({ skill }: { skill: string }) => {
         return css;
       case "scss":
         return scss;
-      case "sass":
-        return scss;
+      case "typescript":
+        return ts;
       case "git":
         return git;
       case "gitlab":
@@ -32,8 +32,6 @@ const ModalSkill = ({ skill }: { skill: string }) => {
         return github;
       case "postgre":
         return postgre;
-      case "ts":
-        return ts;
       case "react":
         return react;
       case "node":
