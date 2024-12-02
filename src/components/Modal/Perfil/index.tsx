@@ -101,25 +101,35 @@ const ModalPerfil = () => {
       </div>
       <p className="text">
         {perfil.biografia === null || perfil.biografia === ""
-          ? "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni ipsum porro ea est! Laborum consectetur eos aspernatur neque amet inventore ex culpa pariatur fugiat nam. Inventore vitae perspiciatis nisi distinctio."
+          ? "Este é um texto exemplo da biografia deste usuário! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus officiis, deleniti at sed, maiores ad provident fugit esse labore illo aliquam itaque ratione, quibusdam harum animi nostrum inventore atque maxime?"
           : perfil.biografia}
       </p>
       <div className="modal-perfil__links">
-        <a href={perfil.linkedin} target="_blank" rel="noopener noreferrer">
-          <img src={linkedin} />
-        </a>
-        <a href={perfil.behance} target="_blank" rel="noopener noreferrer">
-          <img src={behance} />
-        </a>
-        <a href={perfil.figma} target="_blank" rel="noopener noreferrer">
-          <img src={figma} />
-        </a>
-        <a href={perfil.discord} target="_blank" rel="noopener noreferrer">
-          <img src={discord} />
-        </a>
-        <a href={perfil.github} target="_blank" rel="noopener noreferrer">
-          <img src={github} />
-        </a>
+        {perfil.linkedin !== null && perfil.linkedin !== "" ? (
+          <a href={perfil.linkedin} target="_blank" rel="noopener noreferrer">
+            <img src={linkedin} />
+          </a>
+        ) : null}
+        {perfil.behance !== null && perfil.behance !== "" ? (
+          <a href={perfil.behance} target="_blank" rel="noopener noreferrer">
+            <img src={behance} />
+          </a>
+        ) : null}
+        {perfil.figma !== null && perfil.figma !== "" ? (
+          <a href={perfil.figma} target="_blank" rel="noopener noreferrer">
+            <img src={figma} />
+          </a>
+        ) : null}
+        {perfil.discord !== null && perfil.discord !== "" ? (
+          <a href={perfil.discord} target="_blank" rel="noopener noreferrer">
+            <img src={discord} />
+          </a>
+        ) : null}
+        {perfil.github !== null && perfil.github !== "" ? (
+          <a href={perfil.github} target="_blank" rel="noopener noreferrer">
+            <img src={github} />
+          </a>
+        ) : null}
       </div>
     </div>
   );

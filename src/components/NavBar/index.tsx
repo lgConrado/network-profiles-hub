@@ -3,6 +3,7 @@ import perfil from "../../assets/perfil.png";
 import { useEffect, useState } from "react";
 import getData from "../../api/restfull/get";
 import useLocalStorage from "../../storage";
+import powerIcon from "../../assets/power-icon.png";
 
 const NavBar = () => {
   const path = window.location.pathname;
@@ -39,7 +40,7 @@ const NavBar = () => {
           ...usuarioLogado,
           id: usuarioLogadoJSON.id,
           nome: usuarioLogadoJSON.nome,
-          email: usuarioLogadoJSON.email,
+          email: usuarioLogadoJSON.email, 
         });
       }
     };
@@ -59,6 +60,13 @@ const NavBar = () => {
           alt="Foto de perfil"
         />
         <h3>{usuarioLogado.nome}</h3>
+        <img
+          src={powerIcon}
+          style={{ height: "2rem", width: "2rem", cursor: "pointer" }}
+          onClick={() => {
+            navigate("/");
+          }}
+        />
       </div>
       <ul>
         <li

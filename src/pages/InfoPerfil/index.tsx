@@ -284,11 +284,13 @@ const InfoPerfil = () => {
           {usuarioLogado.nome === infoPerfil.nome ? (
             <span
               onClick={() => {
-                setInfoPerfil({
-                  ...infoPerfil,
-                  skills: [...infoPerfil.skills, skill],
-                });
-                setSkill("");
+                if (skill.trim() !== "") {
+                  setInfoPerfil({
+                    ...infoPerfil,
+                    skills: [...infoPerfil.skills, skill],
+                  });
+                  setSkill("");
+                }
               }}
             >
               +

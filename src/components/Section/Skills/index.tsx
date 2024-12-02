@@ -21,16 +21,16 @@ const SectionSkills = () => {
           isNaN(perfilIdFromPath) ? usuarioLogadoJSON.id : perfilIdFromPath
         );
 
-        const newArray = buscaPerfil.Skills.split(",").map((skill: string) =>
-          skill.trim()
-        );
+        const newArray = buscaPerfil.Skills.split(",")
+          .map((skill: string) => skill.trim())
+          .filter((skill: string) => skill !== "");
+          
         setSkills(newArray);
       }
     };
 
     ObterSkills();
   }, []);
-
   return (
     <>
       {skills.length > 0 ? (
@@ -38,7 +38,11 @@ const SectionSkills = () => {
           <h4 className="heading--quaternary">Skills</h4>
           <div className="skills__content">
             {skills.map((skill: string, index) => {
-              return <ModalSkill key={index} skill={skill} />;
+              if (skill !== null && skill !== "") {
+                return <ModalSkill key={index} skill={skill} />;
+              } else {
+                return null;
+              }
             })}
           </div>
         </section>
